@@ -1,0 +1,57 @@
+---
+title: "🔁 Sync API"
+openapi: "POST /plants"
+description: "The Sync API lets you start a wallet sync, check job progress, and pause/continue an existing sync. The service fetches signatures and transactions from supported blockchains and normalizes them for downstream processing."
+---
+
+> Pricing note: **The first 10,000 transactions per wallet are free.** Beyond that, each additional transaction costs **0.5 Compute Units (CU)**.
+
+## 🔄 Status Lifecycle
+
+A sync job transitions through these statuses:
+
+- `FETCHING_SIGNATURES`
+- `FETCHING_TRANSACTIONS`
+- `DONE`
+- `FAILED`
+
+Use **GET **`/sync/:jobId` to poll the current status.
+
+## 📤 POST `/sync`
+
+Start a new sync job for a wallet.
+
+**Headers**
+
+| Name           | Required | Value              |
+| :------------- | :------- | :----------------- |
+| `API_KEY`      | ✅        | Your API key       |
+| `Content-Type` | ✅        | `application/json` |
+
+**Request body**
+
+```
+{ "walletId": "abc" }
+```
+
+**Success response (201)**
+
+```
+{ "jobId": "123" }
+```
+
+**Notes**
+
+- Free for the first **10,000** transactions, then **0.5 CU** per extra transaction.
+- If a sync is already running for the same wallet, the service may return an existing or new `jobId` depending on internal scheduling.
+
+**cURL**
+
+```
+curl -X POST "https://api.ledgerx.finance/v1/sync" \
+  -H "API_KEY: <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"walletId":"abc"}'
+```
+
+---

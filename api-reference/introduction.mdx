@@ -1,33 +1,58 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "🧾 LedgerX API Overview"
+openapi: "POST /plants"
+description: "Welcome to the LedgerX API — a secure and scalable API designed for developers and financial systems that require on-chain accounting automation."
+mode: "wide"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## 🚀 What is LedgerX?
 
-## Welcome
+**LedgerX** enables you to:
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+- Connect and **sync blockchain wallets** (e.g., Solana, Ethereum)
+- Fetch **transactions and balances** across multiple blockchains
+- Apply **accounting logic and PnL calculations**
+- Export data for **tax and financial reporting**
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+The API is optimized for:
 
-## Authentication
+- High-throughput data ingestion
+- Accurate fiat conversion
+- Enterprise-grade data integrity
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+## 🔑 Authentication
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+All API endpoints require an `API_KEY` header:
+
 ```
+curl -X GET "https://api.ledgerx.finance/v1/wallets" \
+  -H "API_KEY: <your-api-key>"
+```
+
+You can generate an API Key in your **LedgerX Dashboard → API Settings**.
+
+## ⚙️ Environment
+
+| Environment | Base URL                             |
+| :---------- | :----------------------------------- |
+| Production  | `https://api.ledgerx.finance/v1`     |
+| Sandbox     | `https://sandbox.ledgerx.finance/v1` |
+
+## 🧠 Design Philosophy
+
+- **Simple but expressive:** RESTful endpoints with consistent structure
+- **Predictable pagination:** always return `{ data, totalItems, totalPages }`
+- **Secure by default:** every call requires authentication
+- **Composable:** endpoints are modular and work across chains
+
+## 📘 Next Steps
+
+- Authentication & Headers
+- Sync API
+- Wallets
+- Financial Transactions
+- Chart of Accounts
+- Members & Organizations
+
+> 💡 **Tip:** The LedgerX API follows OpenAPI 3.1 and supports SDK auto-generation (Go, Python, TypeScript).\
+> You can find SDKs and examples in the LedgerX Developer Portal.

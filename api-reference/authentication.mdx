@@ -1,0 +1,79 @@
+---
+title: "🔑 Authentication & Headers"
+openapi: "DELETE /plants/{id}"
+description: "All LedgerX API endpoints require authentication using an API Key. This key identifies your organization and tracks your API usage, rate limits, and compute unit consumption."
+---
+
+## 🧩 How Authentication Works
+
+1. Generate your **API Key** from the LedgerX Dashboard → **API Settings**.
+2. Include the key in every request under the `API_KEY` header.
+3. Requests without a valid key will return `401 Unauthorized`.
+
+Example request:
+
+```
+curl -X GET "https://api.ledgerx.finance/v1/wallets" \
+  -H "API_KEY: <your-api-key>"
+```
+
+Example error response:
+
+```
+{
+  "error": "Unauthorized",
+  "message": "Missing or invalid API key"
+}
+```
+
+---
+
+## 🧾 Header Reference
+
+| Header         | Type     | Required | Description                                                         |
+| :------------- | :------- | :------- | :------------------------------------------------------------------ |
+| `API_KEY`      | `string` | ✅        | Your authentication key obtained from the LedgerX Dashboard.        |
+| `Content-Type` | `string` | Optional | Default: `application/json`. Must be set for POST and PUT requests. |
+| `Accept`       | `string` | Optional | Default: `application/json`. Specifies the response format.         |
+
+---
+
+## 🕒 Rate Limits
+
+Your request rate depends on your **subscription plan**.
+
+| Plan       | Rate Limit            |
+| :--------- | :-------------------- |
+| Free       | 10 requests / second  |
+| Pro        | 50 requests / second  |
+| Enterprise | 200 requests / second |
+
+> ℹ️ For detailed rate limit information, visit: https://ledgerx.finance/subscriptions
+
+If you exceed the rate limit, the API will return:
+
+```
+{
+  "error": "RateLimitExceeded",
+  "message": "Too many requests. Please retry after a few seconds."
+}
+```
+
+---
+
+## ⚙️ Compute Units
+
+Each API call consumes a specific number of **Compute Units (CU)**. Your account has a monthly quota based on your plan.
+
+Example:
+
+- The first 10,000 synced transactions are **free**.
+- Every additional transaction costs **0.5 CU**.
+
+> View your usage in [LedgerX Subscriptions](https://ledgerx.finance/subscriptions).
+
+## 🧠 Tips
+
+- Always keep your `API_KEY` secret — treat it like a password.
+- Rotate keys periodically for better security.
+- Use a dedicated API key for each environment (e.g., production, sandbox).
